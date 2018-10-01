@@ -1,0 +1,34 @@
+{
+  "name": "skeletor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axel-springer-kugawana/skeletor.git"
+  },
+  "author": "Jonathan Koskas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/axel-springer-kugawana/skeletor/issues"
+  },
+  "homepage": "https://github.com/axel-springer-kugawana/skeletor#readme",
+  "devDependencies": {
+    "@babel/core": "7.1.2",
+    "@babel/preset-env": "7.1.0",
+    "babel-loader": "8.0.4",
+    "clean-webpack-plugin": "0.1.19",
+    "html-webpack-plugin": "3.2.0",
+    "webpack": "4.20.2",
+    "webpack-cli": "3.1.2"
+  },
+  "dependencies": {
+    "aphrodite": "2.2.3",
+    "ramda": "0.25.0"
+  }
+}
