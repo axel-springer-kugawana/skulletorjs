@@ -1,4 +1,4 @@
-import { rectangle, line, block } from '../';
+import { rectangle, line, block } from '../'
 
 export const announceLine = () => {
   const common = {
@@ -7,10 +7,10 @@ export const announceLine = () => {
   }
 
   const photo = rectangle({ width: '310px' })
-  const title = line({ width: "180px", top: 20, left: common.rightColumn })
-  const tag = line({ fontSize: 22, width: "150px", top: 45, left: common.rightColumn })
-  const price = line({ fontSize: 34, width: "220px", top: 80, left: common.rightColumn })
-  const subInformation = line({ fontSize: 14, width: "70px", top: 120, left: common.rightColumn })
+  const title = line({ width: '180px', top: 20, left: common.rightColumn })
+  const tag = line({ fontSize: 22, width: '150px', top: 45, left: common.rightColumn })
+  const price = line({ fontSize: 34, width: '220px', top: 80, left: common.rightColumn })
+  const subInformation = line({ fontSize: 14, width: '70px', top: 120, left: common.rightColumn })
 
   return [
     {
@@ -24,7 +24,6 @@ export const announceLine = () => {
     tag,
     price,
     subInformation,
-    block(),
   ]
 }
 
@@ -34,9 +33,9 @@ export const announceBlock = () => {
     padding: 20,
   }
   const photo = rectangle({ height: `${common.photo}px` })
-  const title = line({ width: "180px", top: common.photo + common.padding, left: common.padding })
-  const tag = line({ fontSize: 22, width: "150px", top: 22 + common.photo + common.padding, left: common.padding })
-  const price = line({ fontSize: 34, width: "220px", top: 22 + 34 + common.photo + common.padding, left: common.padding })
+  const title = line({ width: '180px', top: common.photo + common.padding, left: common.padding })
+  const tag = line({ fontSize: 22, width: '150px', top: 22 + common.photo + common.padding, left: common.padding })
+  const price = line({ fontSize: 34, width: '220px', top: 22 + 34 + common.photo + common.padding, left: common.padding })
 
   return [
     {
@@ -49,6 +48,5 @@ export const announceBlock = () => {
     title,
     tag,
     price,
-    block(),
   ]
-}	
+}
