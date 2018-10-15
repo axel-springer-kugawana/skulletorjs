@@ -1,6 +1,16 @@
-import skeleton, { mediaSkeleton } from './skeletor'
+import { skeleton, mediaSkeleton } from './skeletor'
 import { rectangle, line, circle, square } from './basicShapes'
 
-export { mediaSkeleton, rectangle, line, circle, square }
+function skeletor(shapes, ...params) {
+  if (shapes) {
+    if (Array.isArray(shapes)) {
+      return skeleton(shapes, ...params)
+    } else if (typeof shapes === 'object') {
+      return mediaSkeleton(shapes, ...params)
+    }
+  }
+}
 
-export default skeleton
+export { rectangle, line, circle, square }
+
+export default skeletor

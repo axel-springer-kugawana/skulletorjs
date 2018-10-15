@@ -4,22 +4,11 @@ import __ from 'ramda/es/__'
 
 import ms from 'ms'
 
-import { css } from './css'
-import { COLORS } from './basicShapes'
-import shaper from './shaper'
-
-function stringToHtml(string) {
-  if (typeof string === 'string') {
-    let temporaryContainer = document.createElement('div')
-    temporaryContainer.innerHTML = string.trim()
-    return temporaryContainer.firstChild
-  } else {
-    return false
-  }
-}
+import { render, destroy } from './css-aphrodite'
+import { COLORS, rgba } from './basicShapes'
+import shaper, { SHAPE_KEYS } from './shaper'
 
 function applyAnimation({ sheet, duration = '.8s' }) {
-  const BACKGROUND_KEYS = ['backgroundImage', 'backgroundPosition', 'backgroundSize']
   const animatedGradient = {
     backgroundImage: `linear-gradient(90deg, 
       ${rgba({ ...COLORS.SUB, a: 0 })} 0,
@@ -37,7 +26,7 @@ function applyAnimation({ sheet, duration = '.8s' }) {
 
   map((key) => {
     sheet[':after'][key] = [animatedGradient[key], sheet[':after'][key]].join(', ')
-  }, BACKGROUND_KEYS) // @todo à faire disparaître
+  }, SHAPE_KEYS) // @todo à faire disparaître
 
   return {
     [':after']: {
@@ -48,10 +37,12 @@ function applyAnimation({ sheet, duration = '.8s' }) {
   }
 }
 
-function applyFadeOut({ duration = '.3s' }) {
+function applyFadeOut({ sheet, duration = '.3s' }) {
+  const existingTransitionDuration = sheet.transitionDuration
+
   return {
     opacity: 1,
-    transition: `opacity ${duration} ease-in-out`,
+    transition: `opacity ${existingTransitionDuration || duration} ease-in-out`,
   }
 }
 
@@ -69,20 +60,21 @@ function applyBaseCSS({}) {
   }
 }
 
-function killSkeleton(skelDOM) {
+// @todo découpler la notion de DOM Element pour l'application du fadeout
+function killSkeleton(element) {
   return new Promise((resolve, reject) => {
-    if (skelDOM) {
-      const style = getComputedStyle(skelDOM)
+    if (element) {
+      const style = getComputedStyle(element)
       const time = ms(style.getPropertyValue('transition-duration'))
       const property = style.getPropertyValue('transition-property')
 
       const finish = () => {
-        skelDOM.remove()
+        destroy(element)
         resolve()
       }
 
       if (property === 'opacity' && time > 0) {
-        skelDOM.style.opacity = 0
+        element.style.opacity = 0
         setTimeout(finish, time)
       } else {
         finish()
@@ -93,27 +85,17 @@ function killSkeleton(skelDOM) {
   })
 }
 
-function skeletonFactory(styles, options) {
-  return shaper({
-    styles,
-    visitors: [applyBaseCSS, applyAnimation, applyFadeOut],
-  })
-}
-
-function skeleton(allStyles, promise, dest, options = {}) {
-  const skeletonFactoryWithOptions = curry(skeletonFactory)(__, options)
-  const sheets = map(skeletonFactoryWithOptions, allStyles)
+export function skeleton(shapeArray, promise, apply) {
+  const make = (styles) => shaper({ styles, visitors: [applyBaseCSS, applyAnimation, applyFadeOut] })
+  const sheets = map(make, shapeArray)
 
   return new Promise((resolve, reject) => {
-    if (promise && dest) {
-      const skelDOMList = map((sheet) => {
-        const skelDOM = stringToHtml(`<div class="${css(sheet)}"></div>`)
-        dest.appendChild && dest.appendChild(skelDOM)
-        return skelDOM
-      }, sheets)
+    if (promise && apply) {
+      const renderAndApply = curry(render)(__, apply)
+      const elements = map(renderAndApply, sheets)
 
       promise.then((...args) => {
-        Promise.all(map((skelDOM) => killSkeleton(skelDOM), skelDOMList)).then(() => resolve(...args))
+        Promise.all(map(killSkeleton, elements)).then(() => resolve(...args))
       })
     } else {
       reject()
@@ -121,17 +103,14 @@ function skeleton(allStyles, promise, dest, options = {}) {
   })
 }
 
-export function mediaSkeleton(mediaQueries, promise, dest, options = {}) {
+export function mediaSkeleton(mediaShapeObject, promise, apply) {
   let promises = []
 
-  Object.keys(mediaQueries).map((mediaQuery) => {
-    const allStyles = mediaQueries[mediaQuery]
+  for (let [mediaQuery, shapeArray] of Object.entries(mediaShapeObject)) {
     if (window.matchMedia(`(${mediaQuery})`).matches) {
-      promises = [...promises, skeleton(allStyles, promise, dest, options)]
+      promises = [...promises, skeleton(shapeArray, promise, apply)]
     }
-  })
+  }
 
   return Promise.all(promises).then((all) => all[0])
 }
-
-export default skeleton

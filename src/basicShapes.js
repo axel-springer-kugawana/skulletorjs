@@ -13,7 +13,9 @@ export const COLORS = {
   },
 }
 
-const rgba = ({ r, g, b, a }) => `rgba(${r}, ${g}, ${b}, ${a})`
+export function rgba({ r, g, b, a }) {
+  return `rgba(${r}, ${g}, ${b}, ${a})`
+}
 
 export const line = ({ fontSize = 16, width, left = 0, top = 0, color = COLORS.MAIN } = {}) => ({
   ':after': {

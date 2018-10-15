@@ -1,11 +1,13 @@
+// @flow
 import pick from 'ramda/es/pick'
 import has from 'ramda/es/has'
 import allPass from 'ramda/es/allPass'
 import mergeDeepRight from 'ramda/es/mergeDeepRight'
+import mergeDeepLeft from 'ramda/es/mergeDeepLeft'
 import reduce from 'ramda/es/reduce'
-import { transform } from './css'
+import { transform } from './css-aphrodite'
 
-const SHAPE_KEYS = ['backgroundImage', 'backgroundSize', 'backgroundPosition']
+export const SHAPE_KEYS = ['backgroundImage', 'backgroundSize', 'backgroundPosition']
 
 const isShape = allPass(SHAPE_KEYS.map((key) => has(key)))
 
@@ -21,13 +23,18 @@ function styleSheetVisitor({ earlyStyleSheet, visitors }) {
   let sheet = earlyStyleSheet
   for (let visitor of visitors) {
     const nextSheet = visitor({ sheet })
-    sheet = mergeDeepRight(sheet, nextSheet)
+    sheet = mergeDeepLeft(sheet, nextSheet)
   }
 
   return sheet
 }
 
-function shaper({ styles, visitors = [] }) {
+type ShaperType = {
+  styles: Array<Object>,
+  visitors: Array<Function>,
+}
+
+function shaper({ styles, visitors = [] }: ShaperType) {
   let shapes = [],
     earlyStyleSheet = {
       ':after': {},
