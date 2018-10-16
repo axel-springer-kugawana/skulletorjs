@@ -46,7 +46,7 @@ function applyFadeOut({ sheet, duration = '.3s' }) {
   }
 }
 
-function applyBaseCSS({}) {
+function applyBaseCSS({ }) {
   return {
     ':after': {
       content: '""',

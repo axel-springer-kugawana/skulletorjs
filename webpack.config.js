@@ -30,10 +30,13 @@ module.exports = {
       template: './src/sandbox/index.html',
     }),
     new CleanWebpackPlugin(['dist']),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
   stats: {
     colors: true,
   },
   devtool: 'eval-source-map',
+  devServer: {
+    port: 3000,
+  }
 }

@@ -21,6 +21,7 @@
   "homepage": "https://github.com/axel-springer-kugawana/skeletor#readme",
   "devDependencies": {
     "@babel/core": "7.1.2",
+    "@babel/plugin-proposal-class-properties": "7.1.0",
     "@babel/preset-env": "7.1.0",
     "@babel/preset-flow": "7.0.0",
     "babel-loader": "8.0.4",
@@ -33,9 +34,14 @@
     "webpack-dev-server": "3.1.9"
   },
   "dependencies": {
+    "@babel/preset-react": "7.0.0",
     "aphrodite": "2.2.3",
     "joi": "13.7.0",
     "ms": "2.1.1",
-    "ramda": "0.25.0"
+    "ramda": "0.25.0",
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
+    "styled-components": "4.0.0",
+    "uniqid": "5.0.3"
   }
 }
