@@ -1,0 +1,9 @@
+{
+  "typescript.validate.enable": true,
+  "javascript.validate.enable": true,
+  "prettier.printWidth": 200,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
+  "prettier.arrowParens": "always",
+}

@@ -1,62 +1,28 @@
 import React from 'react'
-import styled from 'styled-components'
-import uniqid from 'uniqid'
-import shaper from './shaper'
+import Loadable from 'react-loadable'
+import skeletor from './skeletor'
 
-const Skeleton = styled.div`
-  ${({ sheet }) => sheet}
-`
+const importTruc = () => import('./truc').then((m) => m._default)
 
-function applyBaseCSS({ }) {
-  return {
-    ':after': {
-      content: '""',
-      display: 'block',
-      width: '100%',
-      height: '100%',
-      backgroundRepeat: 'no-repeat',
-      borderRadius: '6px',
-      boxShadow: '0 10px 45px rgba(0, 0, 0, 0.1)',
-    },
-  }
-}
+const shapeArray = []
 
-function make(styles) {
-  return shaper({ styles, visitors: [applyBaseCSS] })
-}
-
-export default class Skeletor extends React.Component {
+class Composant extends React.Component {
   state = {
-    air: true,
-    sheets: [],
+    air: false,
+    Truc: null,
   }
 
-  componentWillMount() {
-    const { shapeArray } = this.props
+  componentDidMount() {
+    const pr = importTruc()
 
-    if (Array.isArray(shapeArray)) {
-      const sheets = shapeArray.map(make)
-      this.setState({ sheets })
-    }
-  }
-
-  renderSkeletors(sheet) {
-    return (
-      <Skeleton key={uniqid()} sheet={sheet.main._definition} />
-    )
+    const Skel = skeletor(shapeArray, pr, (Truc) => {
+      this.setState({ Truc, air: true })
+    })
   }
 
   render() {
-    const { air, sheets } = this.state
+    const { Truc, air } = this.state
 
-    setTimeout(() => this.setState({ air: false }), 2000)
-
-    return (air &&
-      <React.Fragment>
-        {
-          sheets.map(this.renderSkeletors)
-        }
-      </React.Fragment>
-    )
+    return <div>{air && <Truc />}</div>
   }
 }
