@@ -1,5 +1,3 @@
-// @flow
-
 import { StyleSheet, css as aphroditeCss, minify } from 'aphrodite/no-important'
 
 minify(false)
@@ -14,21 +12,21 @@ function stringToHtml(string) {
   }
 }
 
-export function css(sheet: any) {
+export function css(sheet) {
   return aphroditeCss(sheet.main)
 }
 
-export function transform(sheet: any) {
+export function transform(sheet) {
   return StyleSheet.create({ main: sheet })
 }
 
-export function render(sheet: any, apply: Function) {
+export function render(sheet, apply) {
   const DOM = stringToHtml(`<div class="${css(sheet)}"></div>`)
   apply(DOM)
 
   return DOM
 }
 
-export function destroy(element: HTMLElement) {
+export function destroy(element) {
   return element && element.remove()
 }

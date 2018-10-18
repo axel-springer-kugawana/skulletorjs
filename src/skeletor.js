@@ -39,14 +39,14 @@ function applyAnimation({ sheet, duration = '.8s' }) {
 
 function applyFadeOut({ sheet, duration = '.3s' }) {
   const existingTransitionDuration = sheet.transitionDuration
-
+  // Il faudra utiliser un connect sur l'event transition end afin d'appeler la callback qui sera passer dans End (via l'adapter)
   return {
     opacity: 1,
     transition: `opacity ${existingTransitionDuration || duration} ease-in-out`,
   }
 }
 
-function applyBaseCSS({ }) {
+function applyBaseCSS({}) {
   return {
     ':after': {
       content: '""',

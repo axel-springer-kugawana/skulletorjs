@@ -1,4 +1,3 @@
-// @flow
 import pick from 'ramda/es/pick'
 import has from 'ramda/es/has'
 import allPass from 'ramda/es/allPass'
@@ -29,12 +28,7 @@ function styleSheetVisitor({ earlyStyleSheet, visitors }) {
   return sheet
 }
 
-type ShaperType = {
-  styles: Array<Object>,
-  visitors: Array<Function>,
-}
-
-function shaper({ styles, visitors = [] }: ShaperType) {
+function shaper({ styles, visitors = [] }) {
   let shapes = [],
     earlyStyleSheet = {
       ':after': {},

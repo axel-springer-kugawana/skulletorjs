@@ -1,9 +1,6 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import styled from 'styled-components'
-
-const Skeleton = styled.div`
-  ${({ sheet }) => sheet};
-`
 
 export function css(sheet) {
   return sheet
@@ -13,10 +10,6 @@ export function transform(sheet) {
   return sheet
 }
 
-export function render(sheet, apply) {
-  return <Skeleton sheet={sheet} />
-}
+export function render(sheet, apply) {}
 
-export function destroy(element) {
-  return null
-}
+export function destroy(element) {}
