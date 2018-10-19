@@ -4,10 +4,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import uniqid from 'uniqid'
 
-import skeletor from '../'
-import { announceBlock, announceLine } from './shapes'
+// import skeletor from '../'
+import skeletor from '../v0.0.3/skeletor'
+import { applyBaseCSS } from '../v0.0.3/middleware-manager'
 
-// import SkeletorReact from '../skeletor-react'
+import { announceBlock, announceLine } from './shapes'
 
 const dom = document.getElementById('root')
 
@@ -17,19 +18,58 @@ const fakePromise = new Promise((resolve) => {
   setTimeout(() => resolve('Loading finished'), 2000)
 })
 
-const apply = (element) => dom && dom.appendChild(element)
-
-skeletor(
+const { Skeletor, end } = skeletor(
   {
     'max-width: 639px': [announceBlock(), announceBlock()],
     'min-width: 640px': [announceLine(), announceLine()],
   },
-  fakePromise,
-  apply,
-).then((message) => {
+  [applyBaseCSS],
+)
+
+dom.appendChild(Skeletor)
+
+fakePromise.then((message) => {
   loadingFinished.innerText = message
-  dom && dom.appendChild(loadingFinished)
+  end().then(() => {
+    dom && dom.appendChild(loadingFinished)
+  })
 })
+
+// class Toto extends React.Component {
+//   state = {
+//     loading: true,
+//   }
+
+//   componentDidMount() {
+//     fakePromise.then(() => this.setState({ loading: false }))
+//   }
+
+//   render() {
+//     const { loading } = this.state
+
+//     return (
+//       <React.Fragment>
+//         <Skeletor end={!loading} />
+//       </React.Fragment>
+//     )
+//   }
+// }
+
+// ReactDOM.render(<Toto />, dom)
+
+// const apply = (element) => dom && dom.appendChild(element)
+
+// skeletor(
+//   {
+//     'max-width: 639px': [announceBlock(), announceBlock()],
+//     'min-width: 640px': [announceLine(), announceLine()],
+//   },
+//   fakePromise,
+//   apply,
+// ).then((message) => {
+//   loadingFinished.innerText = message
+//   dom && dom.appendChild(loadingFinished)
+// })
 
 /*
 // EN REACT
