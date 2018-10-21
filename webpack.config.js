@@ -4,10 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
-  entry: {
-    skeletor: path.join(__dirname, 'src/index.js'),
-    sandbox: path.join(__dirname, 'src/sandbox/index.js'),
-  },
+  entry: path.join(__dirname, './sandbox/index.js'),
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
@@ -27,14 +24,14 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/sandbox/index.html',
+      template: './sandbox/index.html',
     }),
     new CleanWebpackPlugin(['dist']),
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
   ],
   optimization: {
     splitChunks: {
-      chunks: 'async',
+      chunks: 'all',
     },
   },
   stats: {

@@ -1,6 +1,6 @@
 {
   "name": "skeletor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -36,12 +36,19 @@
   "dependencies": {
     "@babel/preset-react": "7.0.0",
     "aphrodite": "2.2.3",
+    "aphrodite-jss": "2.1.0",
+    "css": "2.2.4",
     "joi": "13.7.0",
+    "jss": "9.8.7",
+    "jss-nested": "6.0.1",
+    "jss-preset-default": "4.5.0",
     "ms": "2.1.1",
     "ramda": "0.25.0",
     "react": "16.5.2",
     "react-dom": "16.5.2",
+    "react-jss": "8.6.1",
     "styled-components": "4.0.2",
+    "styled-jss": "2.2.3",
     "uniqid": "5.0.3"
   }
 }

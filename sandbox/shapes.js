@@ -1,4 +1,4 @@
-import { rectangle, line, block } from '../'
+import { rectangle, line } from '../src/basicShapes'
 
 export const announceLine = () => {
   const common = {

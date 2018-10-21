@@ -18,7 +18,7 @@ export function rgba({ r, g, b, a }) {
 }
 
 export const line = ({ fontSize = 16, width, left = 0, top = 0, color = COLORS.MAIN } = {}) => ({
-  ':after': {
+  '&:after': {
     backgroundImage: `linear-gradient(${rgba(color)} 100%, transparent 0)`,
     backgroundSize: `${width ? width : '100%'} ${fontSize}px`,
     backgroundPosition: `${left}px ${top}px`,
@@ -26,7 +26,7 @@ export const line = ({ fontSize = 16, width, left = 0, top = 0, color = COLORS.M
 })
 
 export const circle = ({ radius = 16, left = 0, top = 0, color = COLORS.MAIN } = {}) => ({
-  ':after': {
+  '&:after': {
     backgroundImage: `radial-gradient(circle ${radius}px at center, ${rgba(color)} 99%, transparent 0)`,
     backgroundSize: `${radius * 2}px ${radius * 2}px`,
     backgroundPosition: `${left}px ${top}px`,
@@ -34,7 +34,7 @@ export const circle = ({ radius = 16, left = 0, top = 0, color = COLORS.MAIN } =
 })
 
 export const rectangle = ({ width, height, top = 0, left = 0, color = COLORS.MAIN } = {}) => ({
-  ':after': {
+  '&:after': {
     backgroundImage: `linear-gradient(${rgba(color)} 100%, transparent 0)`,
     backgroundSize: `${width ? width : '100%'} ${height ? height : '100%'}`,
     backgroundPosition: `${left}px ${top}px`,
