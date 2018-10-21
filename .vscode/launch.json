@@ -8,7 +8,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Start Sandbox",
-      "url": "http://localhost:8080",
+      "url": "http://localhost:3000",
       "webRoot": "${workspaceRoot}",
       "sourceMaps": true,
       "disableNetworkCache": true
