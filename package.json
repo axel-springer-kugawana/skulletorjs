@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --watch",
-    "build": "webpack --mode production",
-    "flow": "flow",
+    "build": "rimraf ./lib && babel src --out-dir lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -34,6 +33,7 @@
     "webpack-dev-server": "3.1.9"
   },
   "dependencies": {
+    "@babel/cli": "7.1.2",
     "@babel/preset-react": "7.0.0",
     "aphrodite": "2.2.3",
     "aphrodite-jss": "2.1.0",
@@ -47,6 +47,7 @@
     "react": "16.5.2",
     "react-dom": "16.5.2",
     "react-jss": "8.6.1",
+    "rimraf": "2.6.2",
     "styled-components": "4.0.2",
     "styled-jss": "2.2.3",
     "uniqid": "5.0.3"
