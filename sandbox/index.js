@@ -17,7 +17,7 @@ const dom = document.getElementById('root')
 
 const loadingFinished = document.createElement('div')
 
-const { Skeletor, end } = skeletor(
+const { Skeletor, end, restart } = skeletor(
   {
     'max-width: 639px': [announceBlock(), announceBlock()],
     'min-width: 640px': [announceLine(), announceLine()],
@@ -35,6 +35,15 @@ fakePromise.then((message) => {
   loadingFinished.innerText = message
   end().then(() => {
     dom && dom.appendChild(loadingFinished)
+
+    setTimeout(() => {
+      const { Skeletor } = restart()
+      dom.appendChild(Skeletor)
+
+      setTimeout(() => {
+        end()
+      }, 1000)
+    }, 1000)
   })
 })
 

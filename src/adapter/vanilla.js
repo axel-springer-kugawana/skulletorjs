@@ -42,8 +42,14 @@ function render(skeletonArray, augmentedFinish) {
     })
   }
 
+  const restart = () => {
+    sheets && sheets.forEach((sheet) => sheet.attach())
+    return { Skeletor }
+  }
+
   return {
     Skeletor,
+    restart,
     end,
   }
 }
@@ -62,7 +68,15 @@ export function applyFadeOut({ render, finish }) {
     objects.Skeletor.style.opacity = 1
     objects.Skeletor.style.transition = 'opacity 0.3s ease-in-out'
 
-    return objects
+    const augmentedRestart = () => {
+      objects.Skeletor.style.opacity = 1
+      return objects.restart()
+    }
+
+    return {
+      ...objects,
+      restart: augmentedRestart,
+    }
   }
 
   const augmentFinish = (performFinishAction) => {

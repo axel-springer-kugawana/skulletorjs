@@ -30,6 +30,10 @@ function render(skeletonArray, finish) {
       air: true,
     }
 
+    componentDidMount() {
+      sheets && sheets.forEach((sheet) => sheet.attach())
+    }
+
     componentDidUpdate() {
       const { end, onDisapear } = this.props
       const { air } = this.state
