@@ -1,6 +1,6 @@
 import mergeDeepLeft from 'ramda/es/mergeDeepLeft'
 import uniqid from 'uniqid'
-import { rgba, COLORS } from '../basicShapes'
+import { rgba, COLORS } from '../shapes'
 import { SHAPE_KEYS } from '../shaper'
 
 export default function applyAnimation({ transform }) {

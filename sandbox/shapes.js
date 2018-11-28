@@ -1,48 +1,43 @@
-import { rectangle, line } from '../src/basicShapes'
+import { rectangle, line } from '../src/shapes'
 
 export const announceLine = () => {
-  const common = {
-    height: 185,
-    rightColumn: 330,
-  }
+  const column = 330
 
-  const photo = rectangle({ width: '310px' })
-  const title = line({ width: '180px', top: 20, left: common.rightColumn })
-  const tag = line({ fontSize: 22, width: '150px', top: 45, left: common.rightColumn })
-  const price = line({ fontSize: 34, width: '220px', top: 80, left: common.rightColumn })
-  const subInformation = line({ fontSize: 14, width: '70px', top: 120, left: common.rightColumn })
+  const photo = rectangle({ width: [310, 'px'] })
+  const title = line({ fontSize: 16, width: [180, 'px'], top: 20, left: column })
+  const tag = line({ fontSize: 22, width: [150, 'px'], topGap: 10, left: column })
+  const tag1 = line({ fontSize: 22, width: [150, 'px'], topGap: -22, leftGap: 10 })
+  const price = line({ fontSize: 34, width: [220, 'px'], topGap: 10, left: column })
+  const subInformation = line({ fontSize: 14, width: [70, 'px'], topGap: 20, left: column })
 
   return [
     {
-      width: '100%',
-      height: `${common.height}px`,
-      marginBottom: '24px',
-      backgroundColor: 'white',
+      width: [100, '%'],
+      height: [185, 'px'],
+      marginBottom: [24, 'px'],
     },
     photo,
     title,
     tag,
+    tag1,
     price,
     subInformation,
   ]
 }
 
 export const announceBlock = () => {
-  const common = {
-    photo: 225,
-    padding: 20,
-  }
-  const photo = rectangle({ height: `${common.photo}px` })
-  const title = line({ width: '180px', top: common.photo + common.padding, left: common.padding })
-  const tag = line({ fontSize: 22, width: '150px', top: 22 + common.photo + common.padding, left: common.padding })
-  const price = line({ fontSize: 34, width: '220px', top: 22 + 34 + common.photo + common.padding, left: common.padding })
+  const padding = 20
+
+  const photo = rectangle({ height: [225, 'px'] })
+  const title = line({ width: [180, 'px'], topGap: 20, left: padding })
+  const tag = line({ fontSize: 22, width: [150, 'px'], topGap: 20, left: padding })
+  const price = line({ fontSize: 34, width: [220, 'px'], topGap: 20, left: padding })
 
   return [
     {
-      width: '100%',
-      height: '365px',
-      marginBottom: '24px',
-      backgroundColor: 'white',
+      width: [100, '%'],
+      height: [365, 'px'],
+      marginBottom: [24, 'px'],
     },
     photo,
     title,

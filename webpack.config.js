@@ -27,7 +27,7 @@ module.exports = {
       template: './sandbox/index.html',
     }),
     new CleanWebpackPlugin(['dist']),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
   optimization: {
     splitChunks: {

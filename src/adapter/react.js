@@ -5,63 +5,67 @@ import skeletor from '../skeletor'
 
 jss.setup(preset())
 
-let sheets = []
+function adapter() {
+  let sheets = []
 
-function transform(cssObject) {
-  const sheet = jss.createStyleSheet(cssObject)
-  sheets = [...sheets, sheet]
-  const { classes } = sheet.attach()
+  function transform(cssObject) {
+    const sheet = jss.createStyleSheet(cssObject)
+    sheets = [...sheets, sheet]
+    const { classes } = sheet.attach()
 
-  return `<div class="${classes.skeleton}"></div>`
-}
-
-function finish(performFinishAction) {
-  sheets && sheets.forEach((sheet) => sheet.detach())
-  performFinishAction && performFinishAction()
-}
-
-function render(skeletonArray, finish) {
-  const createMarkup = () => {
-    return { __html: `${skeletonArray.map((skeleton) => skeleton).join('')}` }
+    return `<div class="${classes.skeleton}"></div>`
   }
 
-  class Skeletor extends React.Component {
-    state = {
-      air: true,
+  function finish(performFinishAction) {
+    sheets && sheets.forEach((sheet) => sheet.detach())
+    performFinishAction && performFinishAction()
+  }
+
+  function render(skeletonArray, finish) {
+    const createMarkup = () => {
+      return { __html: `${skeletonArray.map((skeleton) => skeleton).join('')}` }
     }
 
-    componentDidMount() {
-      sheets && sheets.forEach((sheet) => sheet.attach())
-    }
+    class Skeletor extends React.Component {
+      state = {
+        air: true,
+      }
 
-    componentDidUpdate() {
-      const { end, onDisapear } = this.props
-      const { air } = this.state
+      componentDidMount() {
+        sheets && sheets.forEach((sheet) => sheet.attach())
+      }
 
-      if (end && air) {
-        if (finish && typeof finish === 'function') {
-          finish(() => {
-            if (typeof onDisapear === 'function') {
-              onDisapear()
-            }
+      componentDidUpdate() {
+        const { end, onDisapear } = this.props
+        const { air } = this.state
+
+        if (end && air) {
+          if (finish && typeof finish === 'function') {
+            finish(() => {
+              if (typeof onDisapear === 'function') {
+                onDisapear()
+              }
+              this.setState({ air: false })
+            })
+          } else {
             this.setState({ air: false })
-          })
-        } else {
-          this.setState({ air: false })
+          }
         }
       }
-    }
-    render() {
-      const { end, onDisapear, ...others } = this.props
-      const { air } = this.state
+      render() {
+        const { end, onDisapear, ...others } = this.props
+        const { air } = this.state
 
-      return air && <div {...{ ...others }} dangerouslySetInnerHTML={createMarkup()} />
+        return air && <div {...{ ...others }} dangerouslySetInnerHTML={createMarkup()} />
+      }
+    }
+
+    return {
+      Skeletor,
     }
   }
 
-  return {
-    Skeletor,
-  }
+  return { transform, finish, render }
 }
 
 export function applyFadeOut({ render }) {
@@ -102,4 +106,8 @@ export function applyFadeOut({ render }) {
   }
 }
 
-export default (shapes, middlewares) => skeletor(shapes, middlewares, { transform, render, finish })
+export default (shapes, middlewares) => {
+  const { transform, render, finish } = adapter()
+
+  return skeletor(shapes, middlewares, { transform, render, finish })
+}

@@ -14,49 +14,53 @@ function stringToHtml(string) {
   }
 }
 
-let sheets = []
+function adapter() {
+  let sheets = []
 
-function transform(cssObject) {
-  const sheet = jss.createStyleSheet(cssObject)
-  sheets = [...sheets, sheet]
-  const { classes } = sheet.attach()
+  function transform(cssObject) {
+    const sheet = jss.createStyleSheet(cssObject)
+    sheets = [...sheets, sheet]
+    const { classes } = sheet.attach()
 
-  const skeleton = stringToHtml(`<div class="${classes.skeleton}" ></div>`)
-  return skeleton
-}
-
-function render(skeletonArray, augmentedFinish) {
-  const Skeletor = document.createElement('div')
-  skeletonArray.forEach((skeleton) => Skeletor.appendChild(skeleton))
-
-  const end = () => {
-    return new Promise((resolve, reject) => {
-      if (augmentedFinish) {
-        augmentedFinish(() => {
-          Skeletor && Skeletor.remove()
-          resolve()
-        })
-      } else {
-        reject('augmentedFinish is not a function')
-      }
-    })
+    const skeleton = stringToHtml(`<div class="${classes.skeleton}" ></div>`)
+    return skeleton
   }
 
-  const restart = () => {
-    sheets && sheets.forEach((sheet) => sheet.attach())
-    return { Skeletor }
+  function render(skeletonArray, augmentedFinish) {
+    const Skeletor = document.createElement('div')
+    skeletonArray.forEach((skeleton) => Skeletor.appendChild(skeleton))
+
+    const end = () => {
+      return new Promise((resolve, reject) => {
+        if (augmentedFinish) {
+          augmentedFinish(() => {
+            Skeletor && Skeletor.remove()
+            resolve()
+          })
+        } else {
+          reject('augmentedFinish is not a function')
+        }
+      })
+    }
+
+    const restart = () => {
+      sheets && sheets.forEach((sheet) => sheet.attach())
+      return { Skeletor }
+    }
+
+    return {
+      Skeletor,
+      restart,
+      end,
+    }
   }
 
-  return {
-    Skeletor,
-    restart,
-    end,
+  function finish(performFinishAction) {
+    sheets && sheets.forEach((sheet) => sheet.detach())
+    performFinishAction && performFinishAction()
   }
-}
 
-function finish(performFinishAction) {
-  sheets && sheets.forEach((sheet) => sheet.detach())
-  performFinishAction && performFinishAction()
+  return { transform, finish, render }
 }
 
 export function applyFadeOut({ render, finish }) {
@@ -93,4 +97,8 @@ export function applyFadeOut({ render, finish }) {
   }
 }
 
-export default (shapes, middlewares) => skeletor(shapes, middlewares, { transform, render, finish })
+export default (shapes, middlewares) => {
+  const { transform, render, finish } = adapter()
+
+  return skeletor(shapes, middlewares, { transform, render, finish })
+}
