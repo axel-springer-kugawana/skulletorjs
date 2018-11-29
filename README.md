@@ -1,11 +1,13 @@
+![enter image description here](https://www.stickersmalin.com/images/ajoute/prd/196/196290-image2_448x448.png)
+
 # SkeletorJS
 
 ## Motivation
 
-Skeletor is a Javascript library that allow you to ease your skeleton loading screen creation.
+SkeletorJS is a Javascript library that allow you to ease your skeleton loading screen creation.
 It use predefined shapes you can configure and compose to create more complex skeleton.
 
-The created skeletons are CSS based, Skeletor also provide control capabilites such as restart, end, disapear (related to fadeout).
+The created skeletons are CSS based, SkeletorJS also provide control capabilites such as restart, end, disapear (related to fadeout).
 
 ### Simple example
 
@@ -41,7 +43,7 @@ The result :
 
 First of all, you need to choose between two adapter : VanillaJS or React adapter. It will define what kind of skeletor you're going to use, but the call is still the same.
 
-**Vanilla adapter :**
+#### Vanilla adapter :
 
 ```javascript
 import skeletor from 'skeletorjs/adapter/vanilla'
@@ -52,7 +54,7 @@ const { Skeletor } = skeletor([bluePrint()], [...middlewares])
 dom.appendChild(Skeletor)
 ```
 
-**React adapter :**
+#### React adapter :
 
 ```javascript
 import React from 'react'
@@ -71,7 +73,7 @@ ReactDOM.render(
 
 ### Shapes
 
-Skeletor provide some basic shapes, most of the time they will be sufficient to satisfy common needs. (But it is possible to create your own, go to chapter 'Raw CSS' or 'Going further')
+SkeletorJS provide some basic shapes, most of the time they will be sufficient to satisfy common needs. (But it is possible to create your own, go to chapter 'Raw CSS' or 'Going further')
 Shape usage is very simple, they are just a bunch of functions with predefined and comprehensive parameters.
 
 They are four shapes : rectangle, line, circle and square (square is equal to rectangle but use only size instead of width / height params).
@@ -108,3 +110,20 @@ const bluePrint = [
 	...
 ]
 ```
+
+### Middlewares
+
+SkeletorJS use a simple middleware system to augment itself, it comes with three premade middleware but in the section "going further", I will show how to create them.
+
+Some of them are adapter's exclusive like `applyFadeOut` while others are able to use on all adapters.
+
+```javascript
+import skeletor, { applyFadeOut } from 'skeletorjs/adapter/vanilla'
+import { applyBaseCSS, applyAnimation } from 'skeletorjs/middlewares'
+
+const { Skeletor } = skeletor([bluePrint()], [applyBaseCSS, applyAnimation, applyFadeOut])
+```
+
+So, `skeletor()` second parameters is an array taking the middleware functions.
+
+It's possible to provide your own middlewares, go to "going further" section to learn how.
