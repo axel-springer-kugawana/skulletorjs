@@ -18,12 +18,7 @@ const bluePrint = () => [
     width: [35, '%'],
     height: [365, 'px'],
   },
-  circle({
-    radius: 35,
-    left: 15,
-    top: 15,
-    color: { r: 255, g: 255, b: 255, a: 1 },
-  }),
+  circle({ radius: 35, left: 15, top: 15, color: { r: 255, g: 255, b: 255, a: 1 } }),
   rectangle({ height: [185, 'px'] }),
   line({ fontSize: 22, width: [180, 'px'], topGap: 20, left: 20 }),
   line({ fontSize: 22, width: [120, 'px'], topGap: 20, left: 20 }),
@@ -72,4 +67,44 @@ ReactDOM.render(
   </div>,
   dom,
 )
+```
+
+### Shapes
+
+Skeletor provide some basic shapes, most of the time they will be sufficient to satisfy common needs. (But it is possible to create your own, go to chapter 'Raw CSS' or 'Going further')
+Shape usage is very simple, they are just a bunch of functions with predefined and comprehensive parameters.
+
+They are four shapes : rectangle, line, circle and square (square is equal to rectangle but use only size instead of width / height params).
+
+```javascript
+import { rectangle, line, circle, square } from 'skeletorjs/shapes'
+const white = { r: 255, g: 255, b: 255, a: 1 }
+
+const authorIcon = circle({ radius: 35, left: 15, top: 15, color: white })
+const photo = rectangle({ height: [185, 'px'] })
+const title = line({ fontSize: 22, width: [180, 'px'], topGap: 20, left: 20 })
+
+const bluePrint = [authorIcon, photo, title]
+```
+
+The blueprint **order** is important :
+
+- the stack will be displayed from first to last shape : if you want the white icon to be on top of the grey rectangle, you need to fill the blue print array with, first, the icon and then the rectangle.
+
+```javascript
+const bluePrint = [
+	whiteIcon, // Will be on top if shapes should overlap.
+	greyRectangle,
+	...
+]
+```
+
+- Gap handling is possible with the use of `topGap` or `leftGap` properties. If set, they will position the shape with a gap from the previous shape.
+
+```javascript
+const bluePrint = [
+	rectangle({ height: [185, 'px'] }),
+	line({ fontSize: 22, topGap: 20 }), //  Will be positioned 20px after the rectangle.
+	...
+]
 ```
