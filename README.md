@@ -124,6 +124,31 @@ import { applyBaseCSS, applyAnimation } from 'skeletorjs/middlewares'
 const { Skeletor } = skeletor([bluePrint()], [applyBaseCSS, applyAnimation, applyFadeOut])
 ```
 
-So, `skeletor()` second parameters is an array taking the middleware functions.
+When applying the middleware `applyAnimation`, the laser ray style animation is applied on our skeleton :
+
+![enter image description here](https://raw.githubusercontent.com/axel-springer-kugawana/skeletor/master/doc/screen2.gif)
 
 It's possible to provide your own middlewares, go to "going further" section to learn how.
+
+### Control
+
+SkeletorJS provide control capabilites, this is the big difference between Vanilla and React adapter, let's see the vanilla version. (The React version will be explained in the next chapter with a full example)
+
+```javascript
+import skeletor, { applyFadeOut } from 'skeletorjs/adapter/vanilla'
+import { applyBaseCSS, applyAnimation } from 'skeletorjs/middlewares'
+
+const { Skeletor, end } = skeletor([bluePrint()], [applyBaseCSS, applyAnimation, applyFadeOut])
+
+const dom = document.getElementById('root')
+dom.appendChild(Skeletor)
+
+// The skeleton will end after 2 seconds, and when disapear, display a text.
+setTimeout(() => {
+  end().then(() => {
+    dom.innerText = 'Loading finished !'
+  })
+}, 2000)
+```
+
+**Be careful**, `end` is different from `disapear`, when `end` is called, the skeletor is asked to finish, but the promise will resolve only when all middlewares release. For instance, with `applyFadeOut` middleware, the skeletor could end but will disapear only when fadeout is terminated.
