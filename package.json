@@ -1,13 +1,16 @@
 {
-  "name": "skeletor",
-  "version": "0.0.3",
-  "description": "",
-  "main": "index.js",
+  "name": "skulletor",
+  "version": "1.0.0",
+  "description": "SkeletorJS is a Javascript library that allow you to ease your skeleton loading screen creation. It use predefined shapes you can configure and compose to create more complex skeleton.",
   "scripts": {
     "dev": "webpack-dev-server --mode development --watch",
     "build": "rimraf ./lib && babel src --out-dir lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "lib",
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/axel-springer-kugawana/skeletor.git"

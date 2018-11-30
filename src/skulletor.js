@@ -9,18 +9,18 @@ function createSkeletons(shapesArray, middlewares, adapter) {
 }
 
 function createMediaSkeletons(mediaShapesObject, middlewares, adapter) {
-  let matchedSkeletor
+  let matchedSkulletor
 
   for (let [mediaQuery, shapeArray] of Object.entries(mediaShapesObject)) {
     if (window.matchMedia(`(${mediaQuery})`).matches) {
-      matchedSkeletor = createSkeletons(shapeArray, middlewares, adapter)
+      matchedSkulletor = createSkeletons(shapeArray, middlewares, adapter)
     }
   }
 
-  return matchedSkeletor
+  return matchedSkulletor
 }
 
-function skeletor(shapes, ...params) {
+function skulletor(shapes, ...params) {
   if (shapes) {
     if (Array.isArray(shapes)) {
       return createSkeletons(shapes, ...params)
@@ -30,4 +30,4 @@ function skeletor(shapes, ...params) {
   }
 }
 
-export default skeletor
+export default skulletor

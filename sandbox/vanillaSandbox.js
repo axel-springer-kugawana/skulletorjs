@@ -1,13 +1,13 @@
-import skeletor, { applyFadeOut } from '../src/adapter/vanilla'
+import skulletor, { applyFadeOut } from '../src/adapter/vanilla'
 import { applyBaseCSS, applyAnimation } from '../src/middlewares'
 
 import { announceBlock, announceLine } from './shapes'
 
-document.getElementsByTagName('h1')[0].innerText = 'Skeletor.js Vanilla Sandbox'
+document.getElementsByTagName('h1')[0].innerText = 'Skulletor.js Vanilla Sandbox'
 
 const dom = document.getElementById('root')
 
-const skel1 = skeletor(
+const skel1 = skulletor(
   {
     'max-width: 639px': [announceBlock(), announceBlock()],
     'min-width: 640px': [announceLine(), announceLine()],
@@ -15,11 +15,11 @@ const skel1 = skeletor(
   [applyBaseCSS, applyAnimation, applyFadeOut],
 )
 
-dom.appendChild(skel1.Skeletor)
+dom.appendChild(skel1.Skulletor)
 
 const dom2 = document.getElementById('root2')
 
-const skel2 = skeletor(
+const skel2 = skulletor(
   {
     'max-width: 639px': [announceBlock(), announceBlock()],
     'min-width: 640px': [announceLine(), announceLine()],
@@ -28,7 +28,7 @@ const skel2 = skeletor(
 )
 
 setTimeout(() => {
-  dom2.appendChild(skel2.Skeletor)
+  dom2.appendChild(skel2.Skulletor)
 }, 1500)
 
 const fakePromise = new Promise((resolve) => {

@@ -1,6 +1,6 @@
 import jss from 'jss'
 import preset from 'jss-preset-default'
-import skeletor from '../skeletor'
+import skulletor from '../skulletor'
 
 jss.setup(preset())
 
@@ -27,14 +27,14 @@ function adapter() {
   }
 
   function render(skeletonArray, augmentedFinish) {
-    const Skeletor = document.createElement('div')
-    skeletonArray.forEach((skeleton) => Skeletor.appendChild(skeleton))
+    const Skulletor = document.createElement('div')
+    skeletonArray.forEach((skeleton) => Skulletor.appendChild(skeleton))
 
     const end = () => {
       return new Promise((resolve, reject) => {
         if (augmentedFinish) {
           augmentedFinish(() => {
-            Skeletor && Skeletor.remove()
+            Skulletor && Skulletor.remove()
             resolve()
           })
         } else {
@@ -45,11 +45,11 @@ function adapter() {
 
     const restart = () => {
       sheets && sheets.forEach((sheet) => sheet.attach())
-      return { Skeletor }
+      return { Skulletor }
     }
 
     return {
-      Skeletor,
+      Skulletor,
       restart,
       end,
     }
@@ -69,11 +69,11 @@ export function applyFadeOut({ render, finish }) {
   const augmentRender = (skeletonArray, finish) => {
     objects = render(skeletonArray, finish)
 
-    objects.Skeletor.style.opacity = 1
-    objects.Skeletor.style.transition = 'opacity 0.3s ease-in-out'
+    objects.Skulletor.style.opacity = 1
+    objects.Skulletor.style.transition = 'opacity 0.3s ease-in-out'
 
     const augmentedRestart = () => {
-      objects.Skeletor.style.opacity = 1
+      objects.Skulletor.style.opacity = 1
       return objects.restart()
     }
 
@@ -84,9 +84,9 @@ export function applyFadeOut({ render, finish }) {
   }
 
   const augmentFinish = (performFinishAction) => {
-    objects.Skeletor.style.opacity = 0
+    objects.Skulletor.style.opacity = 0
 
-    objects.Skeletor.addEventListener('transitionend', () => {
+    objects.Skulletor.addEventListener('transitionend', () => {
       finish(performFinishAction)
     })
   }
@@ -97,8 +97,8 @@ export function applyFadeOut({ render, finish }) {
   }
 }
 
-export default (shapes, middlewares) => {
+export default (shapes, middlewares = []) => {
   const { transform, render, finish } = adapter()
 
-  return skeletor(shapes, middlewares, { transform, render, finish })
+  return skulletor(shapes, middlewares, { transform, render, finish })
 }

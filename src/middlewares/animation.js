@@ -15,7 +15,7 @@ export default function applyAnimation({ transform }) {
       backgroundSize: '200px 100%',
       backgroundPosition: `-250px 0`,
     }
-    const animationName = `skeletor-${uniqid.time()}`
+    const animationName = `skulletor-${uniqid.time()}`
     const animation = {
       [`@keyframes ${animationName}`]: {
         to: {

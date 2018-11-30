@@ -1,17 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import skeletor, { applyFadeOut } from '../src/adapter/react'
+import skulletor, { applyFadeOut } from '../src/adapter/react'
 import { applyBaseCSS, applyAnimation } from '../src/middlewares'
 import { announceBlock, announceLine } from './shapes'
 
 const dom = document.getElementById('root')
 const dom2 = document.getElementById('root2')
 
-document.getElementsByTagName('h1')[0].innerText = 'Skeletor.js React Sandbox'
+document.getElementsByTagName('h1')[0].innerText = 'Skulletor.js React Sandbox'
 
-const makeSkeletor = () => {
-  const { Skeletor } = skeletor(
+const makeSkulletor = () => {
+  const { Skulletor } = skulletor(
     {
       'max-width: 639px': [announceBlock(), announceBlock()],
       'min-width: 640px': [announceLine(), announceLine()],
@@ -19,7 +19,7 @@ const makeSkeletor = () => {
     [applyBaseCSS, applyAnimation, applyFadeOut],
   )
 
-  return Skeletor
+  return Skulletor
 }
 
 class TestLoading extends React.Component {
@@ -29,7 +29,7 @@ class TestLoading extends React.Component {
     displayMessage: false,
   }
 
-  Skeletor = makeSkeletor()
+  Skulletor = makeSkulletor()
 
   componentDidMount() {
     const fakePromise = new Promise((resolve) => {
@@ -41,11 +41,11 @@ class TestLoading extends React.Component {
 
   render() {
     const { loading, message, displayMessage } = this.state
-    const Skeletor = this.Skeletor
+    const Skulletor = this.Skulletor
 
     return (
       <React.Fragment>
-        <Skeletor end={!loading} onDisapear={() => this.setState({ displayMessage: true })} />
+        <Skulletor end={!loading} onDisapear={() => this.setState({ displayMessage: true })} />
         {displayMessage && <div>{message}</div>}
       </React.Fragment>
     )

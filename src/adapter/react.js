@@ -1,7 +1,7 @@
 import React from 'react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
-import skeletor from '../skeletor'
+import skulletor from '../skulletor'
 
 jss.setup(preset())
 
@@ -26,7 +26,7 @@ function adapter() {
       return { __html: `${skeletonArray.map((skeleton) => skeleton).join('')}` }
     }
 
-    class Skeletor extends React.Component {
+    class Skulletor extends React.Component {
       state = {
         air: true,
       }
@@ -61,7 +61,7 @@ function adapter() {
     }
 
     return {
-      Skeletor,
+      Skulletor,
     }
   }
 
@@ -97,7 +97,7 @@ export function applyFadeOut({ render }) {
     }
     return {
       ...objects,
-      Skeletor: withFadeOut(objects.Skeletor),
+      Skulletor: withFadeOut(objects.Skulletor),
     }
   }
 
@@ -109,5 +109,5 @@ export function applyFadeOut({ render }) {
 export default (shapes, middlewares) => {
   const { transform, render, finish } = adapter()
 
-  return skeletor(shapes, middlewares, { transform, render, finish })
+  return skulletor(shapes, middlewares, { transform, render, finish })
 }
