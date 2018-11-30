@@ -148,6 +148,8 @@ setTimeout(() => {
 }, 2000)
 ```
 
+![enter image description here](https://raw.githubusercontent.com/axel-springer-kugawana/skulletorjs/master/doc/screen3.gif)
+
 **Be careful**, `end` and `disapear` are two different concepts.
 When `end` is called, the skeletor is asked to finish, but the promise will only be resolved when all middlewares release.
 For instance, with `applyFadeOut` middleware, the skeletor could end but will disapear only when fadeout is terminated.
