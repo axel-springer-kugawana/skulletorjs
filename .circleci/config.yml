@@ -17,8 +17,8 @@ jobs:
 
       - run: npm ci
       - run:
-        name: Run tests
-        command: npm test
+          name: Run tests
+          command: npm test
 
       - save_cache:
           paths:
@@ -32,16 +32,16 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-        at: ~/repo
+          at: ~/repo
       - run:
-        name: Authenticate with registry
-        command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
       - run:
-        name: Build
-        command: npm run build
+          name: Build
+          command: npm run build
       - run:
-        name: Publish package
-        command: npm publish
+          name: Publish package
+          command: npm publish
 
 workflows:
   version: 2
