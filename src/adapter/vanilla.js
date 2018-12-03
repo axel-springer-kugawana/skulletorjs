@@ -14,7 +14,7 @@ function stringToHtml(string) {
   }
 }
 
-function adapter() {
+export function adapter() {
   let sheets = []
 
   function transform(cssObject) {

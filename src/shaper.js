@@ -1,9 +1,9 @@
-import pick from 'ramda/es/pick'
-import has from 'ramda/es/has'
-import allPass from 'ramda/es/allPass'
-import mergeDeepRight from 'ramda/es/mergeDeepRight'
-import reduce from 'ramda/es/reduce'
-import mapObjIndexed from 'ramda/es/mapObjIndexed'
+import pick from 'ramda/src/pick'
+import has from 'ramda/src/has'
+import allPass from 'ramda/src/allPass'
+import mergeDeepRight from 'ramda/src/mergeDeepRight'
+import reduce from 'ramda/src/reduce'
+import mapObjIndexed from 'ramda/src/mapObjIndexed'
 
 export const SHAPE_KEYS = ['backgroundImage', 'backgroundSize', 'backgroundPosition']
 

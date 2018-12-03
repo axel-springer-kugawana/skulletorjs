@@ -5,7 +5,7 @@ import skulletor from '../skulletor'
 
 jss.setup(preset())
 
-function adapter() {
+export function adapter() {
   let sheets = []
 
   function transform(cssObject) {

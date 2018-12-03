@@ -1,4 +1,4 @@
-import mergeDeepLeft from 'ramda/es/mergeDeepLeft'
+import mergeDeepLeft from 'ramda/src/mergeDeepLeft'
 
 export default function applyBaseCSS({ transform }) {
   const augmentTransform = (cssObject) => {

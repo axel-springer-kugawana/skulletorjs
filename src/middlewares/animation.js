@@ -1,4 +1,4 @@
-import mergeDeepLeft from 'ramda/es/mergeDeepLeft'
+import mergeDeepLeft from 'ramda/src/mergeDeepLeft'
 import uniqid from 'uniqid'
 import { rgba, COLORS } from '../shapes'
 import { SHAPE_KEYS } from '../shaper'

@@ -1,6 +1,6 @@
-import mergeDeepRight from 'ramda/es/mergeDeepRight'
+import mergeDeepRight from 'ramda/src/mergeDeepRight'
 
-export default function middlewareManager({ transform, render, finish }, middlewares) {
+export default function middlewareManager({ transform = () => {}, render = () => {}, finish = () => {} }, middlewares) {
   let transit = { transform, render, finish }
 
   middlewares.forEach((middleware) => {

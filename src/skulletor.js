@@ -22,9 +22,9 @@ function createMediaSkeletons(mediaShapesObject, middlewares, adapter) {
 
 function skulletor(shapes, ...params) {
   if (shapes) {
-    if (Array.isArray(shapes)) {
+    if (Array.isArray(shapes) && shapes.length > 0) {
       return createSkeletons(shapes, ...params)
-    } else if (typeof shapes === 'object') {
+    } else {
       return createMediaSkeletons(shapes, ...params)
     }
   }

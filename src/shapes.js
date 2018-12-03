@@ -69,6 +69,17 @@ export const line = (params = {}) => () => ({
   }),
 })
 
-// export const line = ({ fontSize = 16, width, left = 0, top = 0, color = COLORS.MAIN, topGap, leftGap } = {}) => rectangle({ width, height: [fontSize, 'px'], left, top, color, topGap, leftGap })
-
-export const square = ({ size, top, left, color } = {}) => rectangle({ width: size, height: size, top, left, color })
+export const square = (params = {}) => () => ({
+  params: {
+    ...params,
+    height: params.size,
+    width: params.size,
+  },
+  create: ({ size, top = 0, left = 0, color = COLORS.MAIN } = {}) => ({
+    '&:after': {
+      backgroundImage: `linear-gradient(${rgba(color)} 100%, transparent 0)`,
+      backgroundSize: `${size ? size : '100%'} ${size ? size : '100%'}`,
+      backgroundPosition: `${left}px ${top}px`,
+    },
+  }),
+})
