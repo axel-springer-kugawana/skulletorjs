@@ -1,6 +1,6 @@
 {
   "name": "skulletor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "SkeletorJS is a Javascript library that allow you to ease your skeleton loading screen creation. It use predefined shapes you can configure and compose to create more complex skeleton.",
   "main": "./lib/skulletor.js",
   "scripts": {
