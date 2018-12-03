@@ -18,7 +18,10 @@
     "type": "git",
     "url": "git+https://github.com/axel-springer-kugawana/skeletor.git"
   },
-  "author": "Jonathan Koskas",
+  "author": {
+    "name": "Jonathan KOSKAS",
+    "email": "j.koskas90@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/axel-springer-kugawana/skeletor/issues"
