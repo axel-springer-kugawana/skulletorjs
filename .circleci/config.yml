@@ -1,4 +1,9 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
 version: 2
+
 defaults: &defaults
   working_directory: ~/repo
   docker:
@@ -6,13 +11,14 @@ defaults: &defaults
 
 jobs:
   test:
-    <<: *defaults
+    <<: *defaults  
     steps:
       - checkout
+
       - restore_cache:
-        keys:
+          keys:
           - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
+	  # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
       - run: npm ci
@@ -37,12 +43,12 @@ jobs:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
       - run:
-          name: Build
+          name: Build package
           command: npm run build
       - run:
           name: Publish package
           command: npm publish
-
+            
 workflows:
   version: 2
   test-deploy:
