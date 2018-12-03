@@ -42,6 +42,7 @@ jobs:
       - run:
         name: Publish package
         command: npm publish
+
 workflows:
   version: 2
   test-deploy:
@@ -51,10 +52,10 @@ workflows:
           tags:
             only: /^v.*/
       - deploy:
-          requires:
-            - test
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+        requires:
+          - test
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore: /.*/
