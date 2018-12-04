@@ -42,7 +42,7 @@ First of all, you need to choose between two adapters : Vanilla or React adapter
 #### Vanilla adapter :
 
 ```javascript
-import skulletor from 'skulletorjs/adapter/vanilla'
+import skulletor from 'skulletor/lib/adapter/vanilla'
 
 // Here, 'Skeletor' is a domNode ready to be injected inside the document ...
 const { Skulletor } = skulletor([bluePrint()], [...middlewares])
@@ -54,7 +54,7 @@ dom.appendChild(Skulletor)
 
 ```javascript
 import React from 'react'
-import skulletor from 'skulletorjs/adapter/react'
+import skulletor from 'skulletor/lib/adapter/react'
 
 // ... while here, 'Skeletor' is a react Component.
 const { Skulletor } = skulletor([bluePrint()], [...middlewares])
@@ -75,7 +75,7 @@ Shape creation is very simple, each of them are functions with predefined and co
 They are four shapes : rectangle, line, circle and square (square is equal to rectangle but use only size instead of width / height params).
 
 ```javascript
-import { rectangle, line, circle, square } from 'skulletorjs/shapes'
+import { rectangle, line, circle, square } from 'skulletor/lib/shapes'
 const white = { r: 255, g: 255, b: 255, a: 1 }
 
 const authorIcon = circle({ radius: 35, left: 15, top: 15, color: white })
@@ -114,8 +114,8 @@ SkulletorJS uses a simple middleware system to improve itself.
 Some of them are adapter-specific like `applyFadeOut` while others are generic.
 
 ```javascript
-import skulletor, { applyFadeOut } from 'skulletorjs/adapter/vanilla'
-import { applyBaseCSS, applyAnimation } from 'skulletorjs/middlewares'
+import skulletor, { applyFadeOut } from 'skulletor/lib/adapter/vanilla'
+import { applyBaseCSS, applyAnimation } from 'skulletor/lib/middlewares'
 
 const { Skulletor } = skulletor([bluePrint()], [applyBaseCSS, applyAnimation, applyFadeOut])
 ```
@@ -132,8 +132,8 @@ SkulletorJS provide control capabilites which can differ greatly between the Van
 This chapter focus on the Vanilla version (the React version will be explained in the next chapter with a full example).
 
 ```javascript
-import skulletor, { applyFadeOut } from 'skulletorjs/adapter/vanilla'
-import { applyBaseCSS, applyAnimation } from 'skulletorjs/middlewares'
+import skulletor, { applyFadeOut } from 'skulletor/lib/adapter/vanilla'
+import { applyBaseCSS, applyAnimation } from 'skulletor/lib/middlewares'
 
 const { Skulletor, end } = skulletor([bluePrint()], [applyBaseCSS, applyAnimation, applyFadeOut])
 
@@ -160,9 +160,9 @@ For instance, with `applyFadeOut` middleware, the skeletor could end but will di
 import React, { Fragment, Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import skulletor, { applyFadeOut } from 'skulletorjs/adapter/react'
-import { applyBaseCSS, applyAnimation } from 'skulletorjs/middlewares'
-import { rectangle, line, circle } from 'skulletorjs/shapes'
+import skulletor, { applyFadeOut } from 'skulletor/lib/adapter/react'
+import { applyBaseCSS, applyAnimation } from 'skulletor/lib/middlewares'
+import { rectangle, line, circle } from 'skulletor/lib/shapes'
 
 const bluePrint = () => [
   {
