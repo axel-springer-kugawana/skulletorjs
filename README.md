@@ -1,5 +1,5 @@
 # SkulletorJS
-
+[![CircleCI](https://circleci.com/gh/axel-springer-kugawana/skulletorjs.svg?style=svg)](https://circleci.com/gh/axel-springer-kugawana/skulletorjs)
 ## Motivation
 
 SkulletorJS is a Javascript library that allows you to ease your skeleton loading screen creation. It uses predefined shapes you can configure and compose to create more complex skeletons.
