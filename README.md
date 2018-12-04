@@ -33,7 +33,7 @@ The result :
 
 ## Installation
 
-    npm install skulletorjs
+    npm install skulletor
 
 ## How to use ?
 
