@@ -24,7 +24,13 @@ jobs:
       - run: npm ci
       - run:
           name: Run tests
-          command: npm test
+          command: npm test -- --ci --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
 
       - save_cache:
           paths:
