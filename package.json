@@ -23,6 +23,32 @@
     "email": "j.koskas90@gmail.com"
   },
   "license": "MIT",
+  "keywords": [
+    "skeleton",
+    "screen",
+    "loading",
+    "progressive",
+    "responsive",
+    "blueprint",
+    "perceived",
+    "performance",
+    "illusion",
+    "speed",
+    "UX",
+    "UI",
+    "component",
+    "experience",
+    "mockup",
+    "fast",
+    "react",
+    "jss",
+    "vanilla",
+    "javascript",
+    "CSS",
+    "drawing",
+    "animated",
+    "customizable"
+  ],
   "bugs": {
     "url": "https://github.com/axel-springer-kugawana/skeletor/issues"
   },
