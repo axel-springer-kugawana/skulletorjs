@@ -1,6 +1,7 @@
 import jss from 'jss'
 import preset from 'jss-preset-default'
 import skulletor from '../skulletor'
+import { applyBaseCSS, applyAnimation } from '../middlewares/'
 
 jss.setup(preset())
 
@@ -97,8 +98,15 @@ export function applyFadeOut({ render, finish }) {
   }
 }
 
-export default (shapes, middlewares = []) => {
+function skulletorTool(shapes, middlewares = []) {
   const { transform, render, finish } = adapter()
 
   return skulletor(shapes, middlewares, { transform, render, finish })
+}
+
+export const skulletorFactory = (middlewares = []) => shapes => skulletorTool(shapes, middlewares)
+
+export default (shapes) => {
+  const defaultMiddlewares = [applyBaseCSS, applyAnimation, applyFadeOut]
+  return skulletorTool(shapes, defaultMiddlewares)
 }

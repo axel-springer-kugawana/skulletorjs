@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import skulletor, { applyFadeOut } from '../src/adapter/react'
-import { applyBaseCSS, applyAnimation } from '../src/middlewares'
+import skulletor, { skulletorFactory } from '../src/adapter/react'
+import { applyBaseCSS, applyAnimation } from '../src/middlewares/'
 import { announceBlock, announceLine } from './shapes'
 
 const dom = document.getElementById('root')
@@ -10,14 +10,20 @@ const dom2 = document.getElementById('root2')
 
 document.getElementsByTagName('h1')[0].innerText = 'Skulletor.js React Sandbox'
 
-const makeSkulletor = () => {
-  const { Skulletor } = skulletor(
-    {
-      'max-width: 639px': [announceBlock(), announceBlock()],
-      'min-width: 640px': [announceLine(), announceLine()],
-    },
-    [applyBaseCSS, applyAnimation, applyFadeOut],
-  )
+const makeSkulletor = (useMySkulletor) => {
+  // --- My Skulettor ---
+  let workSkulletor
+
+  if (useMySkulletor) {
+    workSkulletor = skulletorFactory([applyBaseCSS, applyAnimation])
+  } else {
+    workSkulletor = skulletor
+  }
+
+  const { Skulletor } = workSkulletor({
+    'max-width: 639px': [announceBlock(), announceBlock()],
+    'min-width: 640px': [announceLine(), announceLine()],
+  })
 
   return Skulletor
 }
@@ -29,7 +35,7 @@ class TestLoading extends React.Component {
     displayMessage: false,
   }
 
-  Skulletor = makeSkulletor()
+  Skulletor = makeSkulletor(this.props.useMySkulletor)
 
   componentDidMount() {
     const fakePromise = new Promise((resolve) => {
@@ -59,11 +65,12 @@ class App extends React.Component {
 
   render() {
     const { load } = this.state
+    const { useMySkulletor } = this.props
 
     return (
       <div>
         {!load && <button onClick={() => this.setState({ load: true })}>Start</button>}
-        {load && <TestLoading />}
+        {load && <TestLoading {...{ useMySkulletor }} />}
       </div>
     )
   }
@@ -71,4 +78,4 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, dom)
 
-ReactDOM.render(<App />, dom2)
+ReactDOM.render(<App useMySkulletor />, dom2)
