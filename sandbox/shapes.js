@@ -15,6 +15,10 @@ export const announceLine = () => {
       width: [100, '%'],
       height: [185, 'px'],
       marginBottom: [24, 'px'],
+      "&:after": {
+        borderRadius: '6px',
+        boxShadow: '0 10px 45px rgba(0, 0, 0, 0.1)',
+      }
     },
     photo,
     title,
@@ -38,6 +42,10 @@ export const announceBlock = () => {
       width: [100, '%'],
       height: [365, 'px'],
       marginBottom: [24, 'px'],
+      "&:after": {
+        borderRadius: '6px',
+        boxShadow: '0 10px 45px rgba(0, 0, 0, 0.1)',
+      }
     },
     photo,
     title,

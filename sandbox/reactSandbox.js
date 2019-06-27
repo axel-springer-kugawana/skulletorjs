@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import skulletor, { skulletorFactory } from '../src/adapter/react'
-import { applyBaseCSS, applyAnimation } from '../src/middlewares/'
+import { applyBaseCSS, applyAnimation } from '../src/middlewares'
 import { announceBlock, announceLine } from './shapes'
 
 const dom = document.getElementById('root')
@@ -15,7 +15,7 @@ const makeSkulletor = (useMySkulletor) => {
   let workSkulletor
 
   if (useMySkulletor) {
-    workSkulletor = skulletorFactory([applyBaseCSS, applyAnimation])
+    workSkulletor = skulletorFactory([applyBaseCSS(), applyAnimation()])
   } else {
     workSkulletor = skulletor
   }

@@ -1,9 +1,9 @@
 import React from 'react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
-import skulletor from '../skulletor'
 
-import { applyBaseCSS, applyAnimation } from '../middlewares/'
+import skulletor from '../skulletor'
+import { applyBaseCSS, applyAnimation } from '../middlewares'
 
 jss.setup(preset())
 
@@ -70,41 +70,43 @@ export function adapter() {
   return { transform, finish, render }
 }
 
-export function applyFadeOut({ render }) {
-  const getFadeoutStyles = (end) => ({
-    transition: 'opacity .3s ease-in-out',
-    opacity: end ? 0 : 1,
-  })
+export function applyFadeOut({ time = '0.3s', timingFunction = 'ease-in-out' } = {}) {
+  return ({ render }) => {
+    const getFadeoutStyles = (end) => ({
+      transition: `opacity ${time} ${timingFunction}`,
+      opacity: end ? 0 : 1,
+    })
 
-  const augmentRender = (skeletonArray, finish) => {
-    const objects = render(skeletonArray, finish)
+    const augmentRender = (skeletonArray, finish) => {
+      const objects = render(skeletonArray, finish)
 
-    const withFadeOut = (WrappedComponent) => {
-      return class FadeoutComponent extends React.Component {
-        state = {
-          fadeout: false,
-        }
+      const withFadeOut = (WrappedComponent) => {
+        return class FadeoutComponent extends React.Component {
+          state = {
+            fadeout: false,
+          }
 
-        onTransitionEnd = () => {
-          this.setState({ fadeout: true })
-        }
+          onTransitionEnd = () => {
+            this.setState({ fadeout: true })
+          }
 
-        render() {
-          const { end, ...props } = this.props
-          const { fadeout } = this.state
+          render() {
+            const { end, ...props } = this.props
+            const { fadeout } = this.state
 
-          return <WrappedComponent onTransitionEnd={this.onTransitionEnd} style={getFadeoutStyles(end)} {...{ end: fadeout, ...props }} />
+            return <WrappedComponent onTransitionEnd={this.onTransitionEnd} style={getFadeoutStyles(end)} {...{ end: fadeout, ...props }} />
+          }
         }
       }
+      return {
+        ...objects,
+        Skulletor: withFadeOut(objects.Skulletor),
+      }
     }
-    return {
-      ...objects,
-      Skulletor: withFadeOut(objects.Skulletor),
-    }
-  }
 
-  return {
-    render: augmentRender,
+    return {
+      render: augmentRender,
+    }
   }
 }
 
@@ -117,6 +119,6 @@ function skulletorTool(shapes, middlewares = []) {
 export const skulletorFactory = (middlewares = []) => shapes => skulletorTool(shapes, middlewares)
 
 export default (shapes) => {
-  const defaultMiddlewares = [applyBaseCSS, applyAnimation, applyFadeOut]
+  const defaultMiddlewares = [applyBaseCSS(), applyAnimation(), applyFadeOut()]
   return skulletorTool(shapes, defaultMiddlewares)
 }

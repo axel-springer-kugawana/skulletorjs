@@ -1,7 +1,8 @@
 import jss from 'jss'
 import preset from 'jss-preset-default'
+
 import skulletor from '../skulletor'
-import { applyBaseCSS, applyAnimation } from '../middlewares/'
+import { applyBaseCSS, applyAnimation } from '../middlewares'
 
 jss.setup(preset())
 
@@ -64,37 +65,39 @@ export function adapter() {
   return { transform, finish, render }
 }
 
-export function applyFadeOut({ render, finish }) {
-  let objects
+export function applyFadeOut({ time = '0.3s', timingFunction = 'ease-in-out' } = {}) {
+  return ({ render, finish }) => {
+    let objects
 
-  const augmentRender = (skeletonArray, finish) => {
-    objects = render(skeletonArray, finish)
+    const augmentRender = (skeletonArray, finish) => {
+      objects = render(skeletonArray, finish)
 
-    objects.Skulletor.style.opacity = 1
-    objects.Skulletor.style.transition = 'opacity 0.3s ease-in-out'
-
-    const augmentedRestart = () => {
       objects.Skulletor.style.opacity = 1
-      return objects.restart()
+      objects.Skulletor.style.transition = `opacity ${time} ${timingFunction}`
+
+      const augmentedRestart = () => {
+        objects.Skulletor.style.opacity = 1
+        return objects.restart()
+      }
+
+      return {
+        ...objects,
+        restart: augmentedRestart,
+      }
+    }
+
+    const augmentFinish = (performFinishAction) => {
+      objects.Skulletor.style.opacity = 0
+
+      objects.Skulletor.addEventListener('transitionend', () => {
+        finish(performFinishAction)
+      })
     }
 
     return {
-      ...objects,
-      restart: augmentedRestart,
+      render: augmentRender,
+      finish: augmentFinish,
     }
-  }
-
-  const augmentFinish = (performFinishAction) => {
-    objects.Skulletor.style.opacity = 0
-
-    objects.Skulletor.addEventListener('transitionend', () => {
-      finish(performFinishAction)
-    })
-  }
-
-  return {
-    render: augmentRender,
-    finish: augmentFinish,
   }
 }
 
@@ -107,6 +110,6 @@ function skulletorTool(shapes, middlewares = []) {
 export const skulletorFactory = (middlewares = []) => shapes => skulletorTool(shapes, middlewares)
 
 export default (shapes) => {
-  const defaultMiddlewares = [applyBaseCSS, applyAnimation, applyFadeOut]
+  const defaultMiddlewares = [applyBaseCSS(), applyAnimation(), applyFadeOut()]
   return skulletorTool(shapes, defaultMiddlewares)
 }
