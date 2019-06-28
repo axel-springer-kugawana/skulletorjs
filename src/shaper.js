@@ -3,7 +3,6 @@ import has from 'ramda/src/has'
 import allPass from 'ramda/src/allPass'
 import mergeDeepRight from 'ramda/src/mergeDeepRight'
 import reduce from 'ramda/src/reduce'
-import mapObjIndexed from 'ramda/src/mapObjIndexed'
 
 export const SHAPE_KEYS = ['backgroundImage', 'backgroundSize', 'backgroundPosition']
 
@@ -17,10 +16,6 @@ const getBackgroundCombinerTool = () =>
     }
     return result
   }, {})
-
-const convertArrayStyleProperty = (property) => (Array.isArray(property) ? `${property[0]}${property[1]}` : property)
-
-const getArrayStylePropertyValue = (property) => (Array.isArray(property) ? property[0] : property)
 
 const gapHandlerFactory = () => {
   let top = 0,
@@ -38,7 +33,7 @@ const gapHandlerFactory = () => {
 
       if (params.topGap !== null && params.topGap !== undefined) {
         currTop = params.top || 0
-        prevHeight = getArrayStylePropertyValue(previousParams.height || 0)
+        prevHeight = parseInt(previousParams.height || 0)
         prevTop = previousParams.top || 0
         topGap = params.topGap || 0
 
@@ -48,7 +43,7 @@ const gapHandlerFactory = () => {
       }
       if (params.leftGap !== null && params.leftGap !== undefined) {
         currLeft = params.left || 0
-        prevWidth = getArrayStylePropertyValue(previousParams.width || 0)
+        prevWidth = parseInt(previousParams.width || 0)
         prevLeft = previousParams.left || 0
         leftGap = params.leftGap || 0
 
@@ -58,7 +53,6 @@ const gapHandlerFactory = () => {
       }
     }
 
-    updatedParams = mapObjIndexed((value) => convertArrayStyleProperty(value), updatedParams)
     return styleCreator.create(updatedParams)
   }
 }
@@ -76,14 +70,11 @@ function shaper(styles) {
       const index = styles.indexOf(style)
       const previous = styles[index - 1]
       style = useGap(style, previous)
-    } else {
-      style = mapObjIndexed((value) => convertArrayStyleProperty(value), style)
     }
 
     let after = style['&:after']
 
     if (after && isShape(after)) {
-      after = mapObjIndexed((value) => convertArrayStyleProperty(value), after)
       shapes = [...shapes, pick(SHAPE_KEYS, after)]
     }
 
