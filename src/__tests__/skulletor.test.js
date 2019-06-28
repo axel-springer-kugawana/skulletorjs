@@ -21,24 +21,24 @@ const adapterMock = () => {
 
 const bluePrintSample1 = () => [
   {
-    width: [35, '%'],
-    height: [365, 'px'],
+    width: '35%',
+    height: '365px',
   },
   circle({ radius: 35, left: 15, top: 15, color: { r: 255, g: 255, b: 255, a: 1 } }),
-  rectangle({ height: [185, 'px'] }),
-  line({ fontSize: 22, width: [180, 'px'], topGap: 20, left: 20 }),
-  line({ fontSize: 22, width: [120, 'px'], topGap: 20, left: 20 }),
-  line({ fontSize: 36, width: [150, 'px'], topGap: 20, left: 20 }),
+  rectangle({ height: '185px' }),
+  line({ fontSize: 22, width: '180px', topGap: 20, left: 20 }),
+  line({ fontSize: 22, width: '120px', topGap: 20, left: 20 }),
+  line({ fontSize: 36, width: '150px', topGap: 20, left: 20 }),
 ]
 
 const bluePrintSample2 = () => [
   {
-    width: [35, '%'],
-    height: [365, 'px'],
+    width: '35%',
+    height: '365px',
   },
-  rectangle({ height: [185, 'px'] }),
-  line({ fontSize: 22, width: [180, 'px'], topGap: 20, left: 20 }),
-  line({ fontSize: 36, width: [150, 'px'], topGap: 20, left: 20 }),
+  rectangle({ height: '185px' }),
+  line({ fontSize: 22, width: '180px', topGap: 20, left: 20 }),
+  line({ fontSize: 36, width: '150px', topGap: 20, left: 20 }),
 ]
 
 describe('skulletor.js', () => {
