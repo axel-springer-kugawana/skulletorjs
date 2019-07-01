@@ -4,15 +4,15 @@
 ## Table of contents
 1. [Motivation](#motivation)
 2. [Installation](#installation)
-3. [How to use ?](#usage)
-4. [Key concepts](#concepts)
-    1. [Shapes](#concept-shapes)
-    2. [Middlewares](#concept-middleware)
-    3. [Controls](#concept-control)
-    4. [Responsive](#concept-responsive)
-5. [TODO](#todos)
+3. [How to use ?](#how-to-use)
+4. [Key concepts](#key-concepts)
+    1. [Shapes](#shapes)
+    2. [Middlewares](#middlewares)
+    3. [Controls](#controls)
+    4. [Responsive](#responsive)
+5. [TODO](#todo)
 
-## Motivation <a name="motivation"></a>
+## Motivation
 
 SkulletorJS is a Javascript library that allows you to ease your skeleton loading screen creation. It uses predefined shapes you can configure and compose to create more complex skeletons.
 
@@ -43,11 +43,11 @@ dom.appendChild(Skulletor)
 The result :
 ![enter image description here](https://raw.githubusercontent.com/axel-springer-kugawana/skeletor/master/doc/screen1.JPG)
 
-## Installation <a name="installation"></a>
+## Installation
 
     npm install --save skulletor
 
-## How to use ? <a name="usage"></a>
+## How to use
 
 First of all, you need to choose your adapter.
 
@@ -98,8 +98,8 @@ ReactDOM.render(
 )
 ```
 
-## Key concepts <a name="concepts"></a>
-### Shapes <a name="concept-shapes"></a>
+## Key concepts
+### Shapes
 
 SkulletorJS provides some basic shapes sufficient to satisfy common needs. (To implement custom shapes, please refer to chapter 'Raw CSS' or 'Going further').
 Shape creation is very simple, each of them are functions with predefined and comprehensive parameters (fontSize, width etc.).
@@ -147,7 +147,7 @@ const bluePrint = [
 ]
 ```
 
-### Middlewares <a name="concept-middleware"></a>
+### Middlewares
 
 SkulletorJS uses a simple middleware system to improve itself. 
 
@@ -177,7 +177,7 @@ It's possible to provide your own middlewares (refer to "going further" section)
 const mySkulletor = skulletorFactory([applyBaseCSS(), applyAnimation(), applyFadeOut({ time: '0.8s', timingFunction: 'ease-out' })])
 ```
 
-### Controls <a name="concept-control"></a>
+### Controls
 
 SkulletorJS provides control capabilites which can differ greatly between the Vanilla and the React adapter.
 This chapter focuses on the Vanilla version (the React version will be explained in the next chapter with a full example).
@@ -251,7 +251,7 @@ class App extends Component {
 ReactDOM.render(<App />, document.getElementById('root'))
 ```
 
-### Responsive <a name="concept-responsive"></a>
+### Responsive
 
 You can provide media queries in order to handle responsive skeletons :
 
@@ -265,7 +265,7 @@ const { Skulletor } = skulletor({
 }, [applyBaseCSS, applyAnimation, applyFadeOut])
 ```
 
-# TODO <a name="todos"></a>
+# TODO
 
 - [x] Create a basic documentation.
 - [ ] Improve documentation and add following titles :
