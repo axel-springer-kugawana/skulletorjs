@@ -57,9 +57,9 @@ export function adapter() {
     }
   }
 
-  function finish(performFinishAction) {
+  function finish(done) {
     sheets && sheets.forEach((sheet) => sheet.detach())
-    performFinishAction && performFinishAction()
+    done && done()
   }
 
   return { transform, finish, render }
@@ -107,7 +107,7 @@ function skulletorTool(shapes, middlewares = []) {
   return skulletor(shapes, middlewares, { transform, render, finish })
 }
 
-export const skulletorFactory = (middlewares = []) => shapes => skulletorTool(shapes, middlewares)
+export const skulletorFactory = (middlewares = []) => (shapes) => skulletorTool(shapes, middlewares)
 
 export default (shapes) => {
   const defaultMiddlewares = [applyBaseCSS(), applyAnimation(), applyFadeOut()]

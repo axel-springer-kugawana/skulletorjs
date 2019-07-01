@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 
@@ -28,7 +28,6 @@ export function adapter() {
 
     const Skulletor = ({ end, onDisapear, ...others }) => {
       const [onAir, setOnAir] = useState(true)
-
       useEffect(() => sheets && sheets.forEach((sheet) => sheet.attach()), [])
 
       useEffect(() => {
@@ -89,6 +88,74 @@ export function applyFadeOut({ time = '0.3s', timingFunction = 'ease-in-out' } =
   }
 }
 
+export function applyInterrupt({ after = 3000, fallback } = {}) {
+  return ({ render }) => {
+    const augmentRender = (skeletonArray, finish) => {
+      const { Skulletor, ...remain } = render(skeletonArray, finish)
+
+      const AugmentedSkulletor = ({ onDisapear, end, ...props }) => {
+        const [forcedEnd, setForceEnd] = useState(false)
+
+        useEffect(() => {
+          setTimeout(() => {
+            setForceEnd(true)
+            fallback && fallback()
+          }, after)
+        }, [end])
+
+        return (
+          <Skulletor
+            {...{
+              end: forcedEnd || end,
+              ...props,
+            }}
+          />
+        )
+      }
+
+      return { Skulletor: AugmentedSkulletor, ...remain }
+    }
+    return { render: augmentRender }
+  }
+}
+
+export function applyShowDelay({ after = 300 } = {}) {
+  return ({ render }) => {
+    const augmentRender = (skeletonArray, finish) => {
+      const { Skulletor, ...remain } = render(skeletonArray, finish)
+      const AugmentedSkulletor = ({ end, onDisapear, ...props }) => {
+        const [delayResolved, setDelayResolved] = useState(false)
+        const [shouldDisplay, updateDisplay] = useState(false)
+
+        useEffect(() => {
+          const timer = setTimeout(() => {
+            setDelayResolved(true)
+          }, after)
+
+          return () => {
+            clearTimeout(timer)
+          }
+        }, [])
+
+        useEffect(() => {
+          if (end && !delayResolved) {
+            onDisapear()
+          }
+
+          if (!end && delayResolved) {
+            updateDisplay(true)
+          }
+        }, [end, delayResolved])
+
+        return shouldDisplay && <Skulletor {...{ end, onDisapear, ...props }} />
+      }
+      return { Skulletor: AugmentedSkulletor, ...remain }
+    }
+
+    return { render: augmentRender }
+  }
+}
+
 function skulletorTool(shapes, middlewares = []) {
   return skulletor(shapes, middlewares, adapter())
 }
@@ -96,6 +163,6 @@ function skulletorTool(shapes, middlewares = []) {
 export const skulletorFactory = (middlewares = []) => (shapes) => skulletorTool(shapes, middlewares)
 
 export default (shapes) => {
-  const defaultMiddlewares = [applyBaseCSS(), applyAnimation(), applyFadeOut()]
+  const defaultMiddlewares = [applyBaseCSS(), applyAnimation(), applyFadeOut(), applyShowDelay()]
   return skulletorTool(shapes, defaultMiddlewares)
 }
