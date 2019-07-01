@@ -269,9 +269,12 @@ const { Skulletor } = skulletor({
 
 - [x] Create a basic documentation.
 - [ ] Improve documentation and add following titles :
-- API
-- Raw CSS
-- Going further - Create new shapes - Create middlewares - Adapter system for compatibility
+  - API
+  - Raw CSS
+  - Going further
+    - Create new shapes
+    - Create middlewares
+    - Adapter system for compatibility
 - [ ] Add unit tests
 - [ ] Configure CI
 - [ ] Provide an umd builded lib file
