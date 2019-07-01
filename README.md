@@ -1,6 +1,18 @@
 # SkulletorJS
 [![CircleCI](https://circleci.com/gh/axel-springer-kugawana/skulletorjs.svg?style=svg)](https://circleci.com/gh/axel-springer-kugawana/skulletorjs)
-## Motivation
+
+## Table of contents
+1. [Motivation](#motivation)
+2. [Installation](#installation)
+3. [How to use ?](#usage)
+4. [Key concepts](#concepts)
+    1. [Shapes](#concept-shapes)
+    2. [Middlewares](#concept-middleware)
+    3. [Controls](#concept-control)
+    4. [Responsive](#concept-responsive)
+5. [TODO](#todos)
+
+## Motivation <a name="motivation"></a>
 
 SkulletorJS is a Javascript library that allows you to ease your skeleton loading screen creation. It uses predefined shapes you can configure and compose to create more complex skeletons.
 
@@ -13,17 +25,17 @@ This basic script produces a vanilla javascript skeleton. Easy to create, it sim
 ```javascript
 const bluePrint = () => [
   {
-    width: [35, '%'],
-    height: [365, 'px'],
+    width: '35%',
+    height: '365px',
   },
   circle({ radius: 35, left: 15, top: 15, color: { r: 255, g: 255, b: 255, a: 1 } }),
-  rectangle({ height: [185, 'px'] }),
-  line({ fontSize: 22, width: [180, 'px'], topGap: 20, left: 20 }),
-  line({ fontSize: 22, width: [120, 'px'], topGap: 20, left: 20 }),
-  line({ fontSize: 36, width: [150, 'px'], topGap: 20, left: 20 }),
+  rectangle({ height: '185px' }),
+  line({ fontSize: 22, width: '180px', topGap: 20, left: 20 }),
+  line({ fontSize: 22, width: '120px', topGap: 20, left: 20 }),
+  line({ fontSize: 36, width: '150px', topGap: 20, left: 20 }),
 ]
 
-const { Skulletor } = skulletor([bluePrint(), bluePrint()], [applyBaseCSS])
+const { Skulletor } = skulletor([bluePrint(), bluePrint()])
 const dom = document.getElementById('root')
 dom.appendChild(Skulletor)
 ```
@@ -31,13 +43,15 @@ dom.appendChild(Skulletor)
 The result :
 ![enter image description here](https://raw.githubusercontent.com/axel-springer-kugawana/skeletor/master/doc/screen1.JPG)
 
-## Installation
+## Installation <a name="installation"></a>
 
-    npm install skulletor
+    npm install --save skulletor
 
-## How to use ?
+## How to use ? <a name="usage"></a>
 
-First of all, you need to choose between two adapters : Vanilla or React adapter. It will define what kind of skulletor you're going to use, but the call remains similar.
+First of all, you need to choose your adapter.
+
+In the library you have 3 adapters available : Vanilla, React (Hooks) or React. It will define what kind of skulletor you're going to use, but the call remains similar.
 
 #### Vanilla adapter :
 
@@ -45,19 +59,19 @@ First of all, you need to choose between two adapters : Vanilla or React adapter
 import skulletor from 'skulletor/lib/adapter/vanilla'
 
 // Here, 'Skeletor' is a domNode ready to be injected inside the document ...
-const { Skulletor } = skulletor([bluePrint()], [...middlewares])
+const { Skulletor } = skulletor([bluePrint()])
 
 dom.appendChild(Skulletor)
 ```
 
-#### React adapter :
+#### React Hooks adapter :
 
 ```javascript
 import React from 'react'
-import skulletor from 'skulletor/lib/adapter/react'
+import skulletor from 'skulletor/lib/adapter/react-hooks'
 
-// ... while here, 'Skeletor' is a react Component.
-const { Skulletor } = skulletor([bluePrint()], [...middlewares])
+// ... while here, 'Skeletor' is a React Component.
+const { Skulletor } = skulletor([bluePrint()])
 
 ReactDOM.render(
   <div>
@@ -67,20 +81,38 @@ ReactDOM.render(
 )
 ```
 
-### Shapes
+#### React adapter :
 
-SkulletorJS provide some basic shapes sufficient to satisfy common needs. (To implement custom shapes, please refer to chapter 'Raw CSS' or 'Going further')
+```javascript
+import React from 'react'
+import skulletor from 'skulletor/lib/adapter/react'
+
+// Same as React Hooks, this Skulletor is a React Component.
+const { Skulletor } = skulletor([bluePrint()])
+
+ReactDOM.render(
+  <div>
+    <Skulletor />
+  </div>,
+  dom,
+)
+```
+
+## Key concepts <a name="concepts"></a>
+### Shapes <a name="concept-shapes"></a>
+
+SkulletorJS provides some basic shapes sufficient to satisfy common needs. (To implement custom shapes, please refer to chapter 'Raw CSS' or 'Going further').
 Shape creation is very simple, each of them are functions with predefined and comprehensive parameters (fontSize, width etc.).
 
-They are four shapes : rectangle, line, circle and square (square is equal to rectangle but use only size instead of width / height params).
+There are four basic shapes : rectangle, line, circle and square (square is equal to rectangle but use only size instead of width / height params).
 
 ```javascript
 import { rectangle, line, circle, square } from 'skulletor/lib/shapes'
 const white = { r: 255, g: 255, b: 255, a: 1 }
 
 const authorIcon = circle({ radius: 35, left: 15, top: 15, color: white })
-const photo = rectangle({ height: [185, 'px'] })
-const title = line({ fontSize: 22, width: [180, 'px'], topGap: 20, left: 20 })
+const photo = rectangle({ height: '185px' })
+const title = line({ fontSize: 22, width: '180px', topGap: 20, left: 20 })
 
 const bluePrint = [authorIcon, photo, title]
 ```
@@ -101,23 +133,35 @@ const bluePrint = [
 
 ```javascript
 const bluePrint = [
-	rectangle({ height: [185, 'px'] }),
+	rectangle({ height: '185px' }),
 	line({ fontSize: 22, topGap: 20 }), //  Will be positioned 20px after the rectangle.
 	...
 ]
 ```
 
-### Middlewares
+```javascript
+const bluePrint = [
+	rectangle({ height: '185px' }),
+	line({ fontSize: 22, topGap: -22, leftGap: 20 }), //  Will be positioned 20px next to the rectangle. Note the use of topGap with a negative number so the line removes its heights in the gaping 
+	...
+]
+```
 
-SkulletorJS uses a simple middleware system to improve itself.
+### Middlewares <a name="concept-middleware"></a>
+
+SkulletorJS uses a simple middleware system to improve itself. 
 
 Some of them are adapter-specific like `applyFadeOut` while others are generic.
 
+N.B. : The base skulletor function uses 3 middlewares, but you can change this by calling the `skulletorFactory` function used to generate your own "skulletor" function.
+
 ```javascript
-import skulletor, { applyFadeOut } from 'skulletor/lib/adapter/vanilla'
+import { skulletorFactory, applyFadeOut } from 'skulletor/lib/adapter/vanilla'
 import { applyBaseCSS, applyAnimation } from 'skulletor/lib/middlewares'
 
-const { Skulletor } = skulletor([bluePrint()], [applyBaseCSS, applyAnimation, applyFadeOut])
+// Generate your own skulletor function with some middlewares.
+const mySkulletor = skulletorFactory([applyBaseCSS(), applyAnimation(), applyFadeOut()])
+const { Skulletor } = skulletor([bluePrint()])
 ```
 
 When applying the middleware `applyAnimation`, the laser ray style animation is applied on our skeleton :
@@ -126,21 +170,27 @@ When applying the middleware `applyAnimation`, the laser ray style animation is 
 
 It's possible to provide your own middlewares (refer to "going further" section).
 
-### Control
-
-SkulletorJS provide control capabilites which can differ greatly between the Vanilla and the React adapter.
-This chapter focus on the Vanilla version (the React version will be explained in the next chapter with a full example).
+**N.B.** : Middlewares are functions that will be handlded by the middlewareHandler. Provided middlewares are generators so you can custom them as follows.
 
 ```javascript
-import skulletor, { applyFadeOut } from 'skulletor/lib/adapter/vanilla'
-import { applyBaseCSS, applyAnimation } from 'skulletor/lib/middlewares'
+// Custom fadeOut duration and timing function
+const mySkulletor = skulletorFactory([applyBaseCSS(), applyAnimation(), applyFadeOut({ time: '0.8s', timingFunction: 'ease-out' })])
+```
 
-const { Skulletor, end } = skulletor([bluePrint()], [applyBaseCSS, applyAnimation, applyFadeOut])
+### Controls <a name="concept-control"></a>
+
+SkulletorJS provides control capabilites which can differ greatly between the Vanilla and the React adapter.
+This chapter focuses on the Vanilla version (the React version will be explained in the next chapter with a full example).
+
+```javascript
+import skulletor from 'skulletor/lib/adapter/vanilla'
+
+const { Skulletor, end } = skulletor([bluePrint()])
 
 const dom = document.getElementById('root')
 dom.appendChild(Skulletor)
 
-// The skeleton will end after 2 seconds, and when disapear, display a text.
+// The skeleton will end after 2 seconds, and when it disapears, display a text.
 setTimeout(() => {
   end().then(() => {
     dom.innerText = 'Loading finish !'
@@ -152,7 +202,7 @@ setTimeout(() => {
 
 **Be careful**, `end` and `disapear` are two different concepts.
 When `end` is called, the skeletor is asked to finish, but the promise will only be resolved when all middlewares release.
-For instance, with `applyFadeOut` middleware, the skeletor could end but will disapear only when fadeout is terminated.
+For instance, with `applyFadeOut` middleware, the skeleton loader could end but will disapear only when fadeout is terminated.
 
 ### Example with React adapter
 
@@ -160,8 +210,7 @@ For instance, with `applyFadeOut` middleware, the skeletor could end but will di
 import React, { Fragment, Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import skulletor, { applyFadeOut } from 'skulletor/lib/adapter/react'
-import { applyBaseCSS, applyAnimation } from 'skulletor/lib/middlewares'
+import skulletor from 'skulletor/lib/adapter/react'
 import { rectangle, line, circle } from 'skulletor/lib/shapes'
 
 const bluePrint = () => [
@@ -176,7 +225,7 @@ const bluePrint = () => [
   line({ fontSize: 36, width: [150, 'px'], topGap: 20, left: 20 }),
 ]
 
-const { Skulletor } = skulletor([bluePrint()], [applyBaseCSS, applyAnimation, applyFadeOut])
+const { Skulletor } = skulletor([bluePrint()])
 
 class App extends Component {
   state = {
@@ -202,7 +251,7 @@ class App extends Component {
 ReactDOM.render(<App />, document.getElementById('root'))
 ```
 
-### Responsive
+### Responsive <a name="concept-responsive"></a>
 
 You can provide media queries in order to handle responsive skeletons :
 
@@ -216,7 +265,7 @@ const { Skulletor } = skulletor({
 }, [applyBaseCSS, applyAnimation, applyFadeOut])
 ```
 
-# TODO
+# TODO <a name="todos"></a>
 
 - [x] Create a basic documentation.
 - [ ] Improve documentation and add following titles :
