@@ -26,7 +26,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './sandbox/index.html',
     }),
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
     // new BundleAnalyzerPlugin(),
   ],
   optimization: {
