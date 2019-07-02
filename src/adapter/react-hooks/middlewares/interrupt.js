@@ -5,14 +5,19 @@ export default function applyInterrupt({ after = 3000, fallback } = {}) {
     const augmentRender = (skeletonArray, finish) => {
       const { Skulletor, ...remain } = render(skeletonArray, finish)
 
-      const AugmentedSkulletor = ({ end, ...props }) => {
+      const AugmentedSkulletor = ({ end, onInterrupt, ...props }) => {
         const [forcedEnd, setForceEnd] = useState(false)
 
         useEffect(() => {
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setForceEnd(true)
             fallback && fallback()
+            onInterrupt && onInterrupt()
           }, after)
+
+          return () => {
+            clearTimeout(timer)
+          }
         }, [end])
 
         return (

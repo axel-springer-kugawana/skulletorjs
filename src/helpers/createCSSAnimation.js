@@ -6,8 +6,10 @@ export default function createCSSAnimation(cssObject) {
   const animationName = findAnimationName(cssObject)
 
   if (animationName && typeof window !== undefined) {
-    const animation = formatCSSAnimation(cssObject[animationName], animationName)
-    const id = animationName.replace('@keyframes ', '')
-    return { animation, id }
+    const animationRules = formatCSSAnimation(cssObject[animationName], animationName)
+    const animationId = animationName.replace('@keyframes ', '')
+    return { animationRules, animationId }
   }
+
+  return {}
 }
