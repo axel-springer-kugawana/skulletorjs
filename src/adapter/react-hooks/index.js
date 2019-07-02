@@ -10,11 +10,14 @@ import createCSSAnimation from '../../helpers/createCSSAnimation'
 import injectStyleToHead from '../../helpers/injectStyleToHead'
 
 export function adapter() {
-  let sheets = {}
+  let globalStyles = {}
 
   function transform(cssObject) {
-    const { animation, id } = createCSSAnimation(cssObject)
-    sheets[id] = animation
+    const { animationRules, animationId } = createCSSAnimation(cssObject)
+
+    if (animationRules && animationId) {
+      globalStyles[animationId] = animationRules
+    }
 
     return (
       <div key={uniqid()} style={cssObject.skeleton}>
@@ -25,11 +28,11 @@ export function adapter() {
 
   function finish(done) {
     if (typeof window !== undefined) {
-      sheets &&
+      globalStyles &&
         forEachObjIndexed((_value, id) => {
           const styleTag = document.getElementById(id)
           styleTag.parentNode.removeChild(styleTag)
-        }, sheets)
+        }, globalStyles)
     }
     done && done()
   }
@@ -38,7 +41,7 @@ export function adapter() {
     const Skulletor = ({ end, onDisapear, ...others }) => {
       const [onAir, setOnAir] = useState(true)
       useEffect(() => {
-        sheets && forEachObjIndexed(injectStyleToHead, sheets)
+        globalStyles && forEachObjIndexed(injectStyleToHead, globalStyles)
       }, [])
 
       useEffect(() => {
