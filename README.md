@@ -161,7 +161,7 @@ import { applyBaseCSS, applyAnimation } from 'skulletor/lib/middlewares'
 
 // Generate your own skulletor function with some middlewares.
 const mySkulletor = skulletorFactory([applyBaseCSS(), applyAnimation(), applyFadeOut()])
-const { Skulletor } = skulletor([bluePrint()])
+const { Skulletor } = mySkulletor([bluePrint()])
 ```
 
 When applying the middleware `applyAnimation`, the laser ray style animation is applied on our skeleton :
@@ -262,7 +262,7 @@ const bluePrintLarge = () => [ ... ]
 const { Skulletor } = skulletor({
   'max-width: 639px': [bluePrintSmall(), bluePrintSmall()],
   'min-width: 640px': [bluePrintLarge(), bluePrintLarge()],
-}, [applyBaseCSS, applyAnimation, applyFadeOut])
+})
 ```
 
 # TODO
